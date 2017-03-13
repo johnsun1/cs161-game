@@ -1,4 +1,4 @@
-package com.example.cs161_spy;
+package com.example.spy;
 
 import org.junit.Test;
 

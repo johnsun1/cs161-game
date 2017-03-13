@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">CS161-Spy</string>
+    <string name="app_name">Spy</string>
+    <string name="testButton">Test MySQL Connection</string>
+    <string name="helloWorld">Hello World!</string>
+    <string name="store">Store</string>
+    <string name="createGame">Create Game</string>
+    <string name="joinGame">Join Game</string>
+    <string name="spy">You are a spy</string>
+    <string name="nonSpy">You are not a spy</string>
+
+    <string name="createName">Game Name</string>
+    <string name="gameCode">Game Code</string>
+    <string name="codeHint">Enter a 5 character code</string>
+    <string name="begin">Begin Game</string>
+    <string name="returnLobby">Return to Lobby</string>
+    <string name="numPlayers">Number of Players</string>
+
+    <string name="email">Email</string>
+    <string name="pass">Password</string>
+    <string name="login">Login</string>
 </resources>
