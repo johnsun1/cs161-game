@@ -4,42 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.spy.Lobby">
+    tools:context="com.example.spy.Lobby"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_join_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/joinGame"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
         android:layout_marginStart="10dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="125dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="23dp"
-        app:layout_constraintLeft_toLeftOf="@+id/button3" />
+        app:layout_constraintLeft_toLeftOf="@+id/button_create_game"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_create_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/createGame"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/button_store"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="101dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="102dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_join_game" />
+
+    <Button
+        android:id="@+id/button_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/store"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/button_logout"
+        app:layout_constraintRight_toRightOf="@+id/button_logout"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="45dp"
+        app:layout_constraintLeft_toLeftOf="@+id/button_logout" />
+
+    <TextView
+        android:id="@+id/label_welcome_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/button_join_game"
+        android:layout_marginTop="53dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/log_out_button"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="255dp"
+        android:layout_marginBottom="134dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/store"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        android:layout_marginStart="5dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="22dp"
-        app:layout_constraintLeft_toLeftOf="@+id/button2" />
 </android.support.constraint.ConstraintLayout>

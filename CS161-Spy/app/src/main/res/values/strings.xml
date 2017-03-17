@@ -21,4 +21,9 @@
 
     <string name="auth_failed">Authentication failed</string>
     <string name="register_button">Register</string>
+    <string name="log_out_button">Log Out</string>
+
+    <string name="game_lobby_welcome">Welcome to the game lobby. When enough players have joined the lobby, you may begin the game.</string>
+    <string name="player_placeholder">Waiting for player to join lobby</string>
+
 </resources>
