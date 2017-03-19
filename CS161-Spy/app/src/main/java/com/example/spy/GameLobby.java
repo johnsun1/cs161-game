@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.content.Intent;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.database.FirebaseDatabase;
@@ -18,14 +19,24 @@ import java.util.ArrayList;
 
 import android.widget.TextView;
 
-public class GameLobby extends AppCompatActivity {
+import android.view.View;
+
+public class GameLobby extends AppCompatActivity implements View.OnClickListener {
     private Intent extra;
+
     private String game_code;
-    private ArrayList<FirebaseUser> players;
+    private String game_name;
+
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private FirebaseUser user;
 
-    TextView p1;
+    private Bundle data;
+
+    private TextView p1;
+    private TextView p2;
+    private TextView p3;
+    private TextView p4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +45,66 @@ public class GameLobby extends AppCompatActivity {
 
         //Retrieve extra information from game creation menu
         extra = getIntent();
-        game_code = extra.getStringExtra("game_code");
+        data = extra.getBundleExtra("game_data");
+        game_code = data.getString("game_code");
+        game_name = data.getString("game_name");
 
         //Views
         p1 = (TextView) findViewById(R.id.label_p1);
+        p2 = (TextView) findViewById(R.id.label_p2);
+        p3 = (TextView) findViewById(R.id.label_p3);
+        p4 = (TextView) findViewById(R.id.label_p4);
 
-        findPlayers();
+        //Add all players into a data structure for easy handling
+
+
+        //Buttons
+        findViewById(R.id.button_back).setOnClickListener(this);
+
+        //Get database reference
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+
+        //Store game and player information
+        myRef = database.getReference("lobby/" + game_code);
+        myRef.setValue(user.getEmail());
+
+        p1.setText(user.getEmail()); //Set player 1 to the person who made the game
     }
 
     public void findPlayers() {
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("players/" + game_code);
-        // Attach a listener to read the data at our posts reference
+        myRef = database.getReference("lobby/" + game_code + "/players");
+
+        // Attach a listener to read the data at our game lobby reference
         myRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String email = dataSnapshot.getValue(String.class);
-                p1.setText(p1.getText().toString());
+                //Need to pull new data from dataSnapshot and display it on the activity
             }
+
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
 
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        //Stuff happens when buttons are clicked
+        int id = v.getId();
+        if (id == R.id.button_back) {
+            //Clean up old game lobby information
+            myRef = database.getReference("lobby");
+            myRef.child(game_code).removeValue(); //Remove all data associated with the current game
+
+            //Return to the main lobby
+            Intent main_lobby = new Intent(GameLobby.this, MainActivity.class);
+            startActivity(main_lobby);
+        } else if (id == R.id.button_check_players) {
+            findPlayers();
+        }
     }
 }

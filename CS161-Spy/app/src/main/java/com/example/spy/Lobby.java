@@ -45,9 +45,10 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener {
             Intent new_game = new Intent(Lobby.this, CreateGame.class);
             startActivity(new_game);
         } else if (i == R.id.button_join_game) {
-
+            Intent join_game = new Intent(Lobby.this, JoinGame.class);
+            startActivity(join_game);
         } else if (i == R.id.button_store) {
-
+            //TO BE IMPLEMENTED Intent store = new Intent(Lobby.this, Store.class);
         } else if (i == R.id.button_logout) {
             signOut();
             Intent title = new Intent(Lobby.this, MainActivity.class);

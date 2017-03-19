@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class CreateGame extends AppCompatActivity implements View.OnClickListener {
     EditText game_name;
     EditText game_code;
+    Bundle data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +35,19 @@ public class CreateGame extends AppCompatActivity implements View.OnClickListene
         findViewById(R.id.button_return_lobby).setOnClickListener(this);
     }
 
-    //Get database reference
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("lobby");
-
     //Do stuff when buttons are clicked
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.button_begin_game) {
 
-            //Store game information
-            myRef.child(game_code.getText().toString()).setValue(game_code.getText().toString());
-            myRef.child(game_code.getText().toString()).child("game_name").setValue(game_name.getText().toString());
-
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-            //Store current user into a new game
-            myRef = database.getReference("users");
-            myRef.child(game_code.getText().toString()).setValue(user.getEmail());
-
             //Attach the game code to an Intent, and send it to the game waiting lobby
             Intent start_game_lobby = new Intent(CreateGame.this, GameLobby.class);
-            start_game_lobby.putExtra("game_code", game_code.getText().toString());
+
+            data = new Bundle(); //Create a bundle to hold game data
+            data.putString("game_code", game_code.getText().toString());
+            data.putString("game_name", game_name.getText().toString());
+
+            start_game_lobby.putExtra("game_data", data); //Attach the Bundle to the Intent <key, val>
             startActivity(start_game_lobby);
         } else if (i == R.id.button_return_lobby) {
             Intent return_to_lobby = new Intent(CreateGame.this, Lobby.class);
