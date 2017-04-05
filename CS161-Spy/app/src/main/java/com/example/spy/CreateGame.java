@@ -39,7 +39,6 @@ public class CreateGame extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.button_begin_game) {
-
             //Attach the game code to an Intent, and send it to the game waiting lobby
             Intent start_game_lobby = new Intent(CreateGame.this, GameLobby.class);
 

@@ -65,9 +65,11 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
 
-        //Store game and player information
+        //Store game information
         myRef = database.getReference("lobby/" + game_code);
-        myRef.setValue(user.getEmail());
+        myRef.setValue(game_name);
+
+        //TODO: Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
 
         p1.setText(user.getEmail()); //Set player 1 to the person who made the game
     }

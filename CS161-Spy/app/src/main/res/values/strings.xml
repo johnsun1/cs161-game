@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spy</string>
+    <string name="app_name">SpyFall</string>
     <string name="testButton">Test MySQL Connection</string>
     <string name="helloWorld">Hello World!</string>
     <string name="store">Store</string>

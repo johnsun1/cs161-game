@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
 
+        //Request focus on email field
+        field_email.requestFocus();
+
     }
 
     @Override
