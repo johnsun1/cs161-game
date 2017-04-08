@@ -9,8 +9,19 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.spy.MainActivity"
+    android:background="#5fb0c9"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
+    <TextView
+        android:layout_width="336dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text=" SPY "
+        android:textColor="#fff"
+        android:textSize="30sp"
+        android:textStyle="italic"
+        tools:layout_editor_absoluteY="49dp"
+        tools:layout_editor_absoluteX="24dp" />
 
     <TextView
         android:id="@+id/label_password"
@@ -33,7 +44,8 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/button_register"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/label_password" />
+        app:layout_constraintLeft_toRightOf="@+id/label_password"
+        android:layout_marginLeft="-8dp" />
 
     <TextView
         android:id="@+id/label_email"
