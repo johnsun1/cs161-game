@@ -38,6 +38,7 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+
         //Stuff happens when the user clicks a button
         int id = v.getId();
         if (id == R.id.button_join_game) {
@@ -49,7 +50,7 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
             //Store game and player information
             myRef = database.getReference("lobby/" + join_game_code + "/" + user.getEmail());
             myRef.setValue("active");
-
+            //Game.class = start the game
             Intent existing_game = new Intent(JoinGame.this, Game.class);
             startActivity(existing_game);
 
