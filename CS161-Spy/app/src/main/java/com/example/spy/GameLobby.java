@@ -31,6 +31,8 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     private DatabaseReference myRef;
     private FirebaseUser user;
 
+    ArrayList<FirebaseUser> players;
+
     private Bundle data;
 
     private TextView p1;
@@ -56,7 +58,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         p4 = (TextView) findViewById(R.id.label_p4);
 
         //Add all players into a data structure for easy handling
-
+        players = new ArrayList<FirebaseUser>();
 
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
@@ -66,24 +68,32 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         database = FirebaseDatabase.getInstance();
 
         //Store game information
-        myRef = database.getReference("lobby/" + game_code);
-        myRef.setValue(game_name);
+        myRef = database.getReference();
+        myRef.child("lobby").child(game_code).setValue(game_name);
 
         //TODO: Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user.getEmail());
+        players.add(user); //Add first player to array list so that we can count the number of players
 
-        p1.setText(user.getEmail()); //Set player 1 to the person who made the game
+        //Set player 1 to the person who made the game
+        p1.setText(user.getEmail());
     }
 
     public void findPlayers() {
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("lobby/" + game_code + "/players");
 
         // Attach a listener to read the data at our game lobby reference
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.child("lobby").child(game_code).child("players").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Need to pull new data from dataSnapshot and display it on the activity
+                if (players.size() == 4) {
+                    //Start the game
+                    Intent mainGameActivity = new Intent(GameLobby.this, Game.class);
+                    startActivity(mainGameActivity);
+                } else {
+                    //Do nothing
+                }
             }
 
             public void onCancelled(DatabaseError databaseError) {
