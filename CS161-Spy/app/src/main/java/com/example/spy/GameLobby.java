@@ -71,7 +71,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         myRef = database.getReference();
         myRef.child("lobby").child(game_code).setValue(game_name);
 
-        //TODO: Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
+        //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
         myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user.getEmail());
         players.add(user); //Add first player to array list so that we can count the number of players
 
@@ -92,7 +92,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                     Intent mainGameActivity = new Intent(GameLobby.this, Game.class);
                     startActivity(mainGameActivity);
                 } else {
-                    //Do nothing
+                    //TODO: Add new player to the game lobby list and array list
                 }
             }
 
