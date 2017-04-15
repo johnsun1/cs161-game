@@ -29,9 +29,9 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser user;
-    private FirebaseUser newUser;
+    private Player newUser;
 
-    ArrayList<String> players;
+    ArrayList<Player> players;
 
     private Bundle data;
 
@@ -57,7 +57,7 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         p4 = (TextView) findViewById(R.id.label_p4);
 
         //Add all players into a data structure for easy handling
-        players = new ArrayList<String>();
+        players = new ArrayList<Player>();
 
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
@@ -67,10 +67,11 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
+        Player player = new Player(user.getEmail(), "None");
 
         //Add player to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user.getEmail()); //Store the user in the tree
-        players.add(user.getEmail()); //Add first player to array list so that we can count the number of players
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
+        players.add(player); //Add first player to array list so that we can count the number of players
 
         //List the current user's email on the list of players
     }
@@ -87,18 +88,18 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
                 for (DataSnapshot data: dataSnapshot.getChildren()) {
                     //Look for an empty spot, then put the new player's
                     //TODO: Add the new player to the arraylist
-                    FirebaseUser snapshotUser = data.getValue(FirebaseUser.class);
+                    Player snapshotUser = (Player) data.getValue();
 
                     Boolean found = false; //Reset found flag to false
-                    for (String s: players) {
-                        if (s.equals(snapshotUser.getEmail())) {
+                    for (Player p: players) {
+                        if (p.getEmail().equals(snapshotUser.getEmail())) {
                             found = true; //snapshotUser is already in the list
                         }
                     }
 
                     //If the snapshotUser is not already in the list, add them to the list
                     if (!found) {
-                        players.add(snapshotUser.getEmail());
+                        players.add(snapshotUser);
                         newUser = snapshotUser;
                     }
                 }
