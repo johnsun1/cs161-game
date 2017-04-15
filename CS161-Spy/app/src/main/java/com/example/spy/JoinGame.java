@@ -52,6 +52,11 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
 
             //Start the existing game lobby
             Intent existing_game = new Intent(JoinGame.this, GameLobbyJoin.class);
+
+            Bundle data = new Bundle();
+            data.putString("game_code", join_game_code.getText().toString());
+            existing_game.putExtra("game_data", data);
+
             startActivity(existing_game);
 
         } else if (id == R.id.button_return_lobby) {

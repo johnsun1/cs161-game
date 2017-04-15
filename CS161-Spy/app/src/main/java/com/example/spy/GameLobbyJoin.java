@@ -49,7 +49,6 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         extra = getIntent();
         data = extra.getBundleExtra("game_data");
         game_code = data.getString("game_code");
-        game_name = data.getString("game_name");
 
         //Views
         p1 = (TextView) findViewById(R.id.label_p1);
