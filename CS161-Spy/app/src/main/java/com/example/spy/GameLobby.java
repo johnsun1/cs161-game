@@ -31,7 +31,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     private FirebaseUser user;
     private FirebaseUser newUser;
 
-    ArrayList<FirebaseUser> players;
+    ArrayList<String> players;
 
     private Bundle data;
 
@@ -58,7 +58,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         p4 = (TextView) findViewById(R.id.label_p4);
 
         //Add all players into a data structure for easy handling
-        players = new ArrayList<FirebaseUser>();
+        players = new ArrayList<String>();
 
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
@@ -72,11 +72,10 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         myRef.child("lobby").child(game_code).setValue(game_name);
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user); //Store the user in the tree
-        players.add(user); //Add first player to array list so that we can count the number of players
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user.getEmail()); //Store the user in the tree
+        players.add(user.getEmail()); //Add first player to array list so that we can count the number of players
 
-        //Set player 1 to the person who made the game
-        p1.setText(user.getEmail());
+        findPlayers();
     }
 
     public void findPlayers() {
@@ -92,28 +91,29 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                     //Look for an empty spot, then put the new player's
 
                     //TODO: Add the new player to the arraylist
-                    FirebaseUser snapshotUser = data.getValue(FirebaseUser.class);
+                    FirebaseUser snapshotUser = (FirebaseUser) data.getValue();
 
                     Boolean found = false; //Reset found flag to false
-                    for (FirebaseUser u: players) {
-                        if (u.getUid().equals(snapshotUser.getUid())) {
+                    for (String s: players) {
+                        if (s.equals(snapshotUser.getEmail())) {
                             found = true; //snapshotUser is already in the list
                         }
                     }
 
                     //If the snapshotUser is not already in the list, add them to the list
                     if (!found) {
-                         players.add(snapshotUser);
+                         players.add(snapshotUser.getEmail());
                          newUser = snapshotUser; //Pass the new user to newUser so that we can work with it outside of the loop
                     }
                 }
 
-                 String defaultText = "Waiting for player to join game";
-                 if (!p2.getText().equals(defaultText)) {
+                if (players.size() == 1) {
+                    p1.setText(user.getEmail());
+                }  else if (players.size() > 1) {
                      p2.setText(newUser.getEmail());
-                 } else if (!p3.getText().equals(defaultText)) {
+                 } else if (players.size() > 2) {
                      p3.setText(newUser.getEmail());
-                 } else if (!p4.getText().equals(defaultText)) {
+                 } else if (players.size() > 3) {
                      p4.setText(newUser.getEmail());
                  }
 
@@ -122,6 +122,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                     Intent startGame = new Intent(GameLobby.this, Game.class);
                     startActivity(startGame);
                 }
+
             }
 
             public void onChildRemoved(DataSnapshot dataSnapshot) {

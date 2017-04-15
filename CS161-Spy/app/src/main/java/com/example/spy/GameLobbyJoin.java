@@ -31,7 +31,7 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
     private FirebaseUser user;
     private FirebaseUser newUser;
 
-    ArrayList<FirebaseUser> players;
+    ArrayList<String> players;
 
     private Bundle data;
 
@@ -57,7 +57,7 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         p4 = (TextView) findViewById(R.id.label_p4);
 
         //Add all players into a data structure for easy handling
-        players = new ArrayList<FirebaseUser>();
+        players = new ArrayList<String>();
 
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
@@ -69,8 +69,8 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
 
 
         //Add player to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user); //Store the user in the tree
-        players.add(user); //Add first player to array list so that we can count the number of players
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user.getEmail()); //Store the user in the tree
+        players.add(user.getEmail()); //Add first player to array list so that we can count the number of players
 
         //List the current user's email on the list of players
     }
@@ -90,15 +90,15 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
                     FirebaseUser snapshotUser = data.getValue(FirebaseUser.class);
 
                     Boolean found = false; //Reset found flag to false
-                    for (FirebaseUser u: players) {
-                        if (u.getUid().equals(snapshotUser.getUid())) {
+                    for (String s: players) {
+                        if (s.equals(snapshotUser.getEmail())) {
                             found = true; //snapshotUser is already in the list
                         }
                     }
 
                     //If the snapshotUser is not already in the list, add them to the list
                     if (!found) {
-                        players.add(snapshotUser);
+                        players.add(snapshotUser.getEmail());
                         newUser = snapshotUser;
                     }
                 }
