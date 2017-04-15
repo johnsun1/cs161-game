@@ -31,14 +31,14 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
         //Views
         join_game_code = (EditText) findViewById(R.id.field_join_game_code);
 
+        //Buttons
+        findViewById(R.id.button_join_game).setOnClickListener(this);
+        findViewById(R.id.button_return_lobby).setOnClickListener(this);
+
         //Initialize stuff
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-
-        //Buttons
-        findViewById(R.id.button_join_game).setOnClickListener(this);
-        findViewById(R.id.button_return_lobby).setOnClickListener(this);
     }
 
     @Override
@@ -46,13 +46,12 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
 
         //Stuff happens when the user clicks a button
         int id = v.getId();
+
+        //Add player to the game lobby
         if (id == R.id.button_join_game) {
-            //Add player to the game lobby
 
-            //Store game and player information
-            myRef.child("lobby").child(join_game_code.toString()).child("players").child(user.getUid()).setValue(user); //Store the user in the tree
-
-            Intent existing_game = new Intent(JoinGame.this, GameLobby.class);
+            //Start the existing game lobby
+            Intent existing_game = new Intent(JoinGame.this, GameLobbyJoin.class);
             startActivity(existing_game);
 
         } else if (id == R.id.button_return_lobby) {
