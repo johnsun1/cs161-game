@@ -9,12 +9,11 @@ import android.content.Intent;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseError;
-
 import java.util.ArrayList;
 
 import android.widget.TextView;
@@ -30,6 +29,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser user;
+    private FirebaseUser newUser;
 
     ArrayList<FirebaseUser> players;
 
@@ -72,7 +72,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         myRef.child("lobby").child(game_code).setValue(game_name);
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user.getEmail());
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user); //Store the user in the tree
         players.add(user); //Add first player to array list so that we can count the number of players
 
         //Set player 1 to the person who made the game
@@ -82,18 +82,57 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     public void findPlayers() {
 
         // Attach a listener to read the data at our game lobby reference
-        myRef.child("lobby").child(game_code).child("players").addValueEventListener(new ValueEventListener() {
+        myRef.child("lobby").child(game_code).child("players").addChildEventListener(new ChildEventListener() {
 
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Need to pull new data from dataSnapshot and display it on the activity
-                if (players.size() == 4) {
-                    //Start the game
-                    Intent mainGameActivity = new Intent(GameLobby.this, Game.class);
-                    startActivity(mainGameActivity);
-                } else {
-                    //TODO: Add new player to the game lobby list and array list
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+
+            //Add new player to the game lobby list and array list
+                for (DataSnapshot data: dataSnapshot.getChildren()) {
+                    //Look for an empty spot, then put the new player's
+                    //TODO: Add the new player to the arraylist
+                    FirebaseUser snapshotUser = data.getValue(FirebaseUser.class);
+
+                    Boolean found = false; //Reset found flag to false
+                    for (FirebaseUser u: players) {
+                        if (u.getUid().equals(snapshotUser.getUid())) {
+                            found = true; //snapshotUser is already in the list
+                        }
+                    }
+
+                //If the snapshotUser is not already in the list, add them to the list
+                if (!found) {
+                    players.add(snapshotUser);
+                    newUser = snapshotUser;
                 }
+            }
+
+                 String defaultText = "Waiting for player to join game";
+                 if (!p2.getText().equals(defaultText)) {
+                     p2.setText(newUser.getEmail());
+                 } else if (!p3.getText().equals(defaultText)) {
+                     p3.setText(newUser.getEmail());
+                 } else if (!p4.getText().equals(defaultText)) {
+                     p4.setText(newUser.getEmail());
+                 }
+
+                 //TODO: Check for full lobby
+                if (players.size() == 4) {
+                    Intent startGame = new Intent(GameLobby.this, Game.class);
+                    startActivity(startGame);
+                }
+            }
+
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+
+            }
+
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+
             }
 
             public void onCancelled(DatabaseError databaseError) {
