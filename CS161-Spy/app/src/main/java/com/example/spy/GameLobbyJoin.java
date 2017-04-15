@@ -103,12 +103,13 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
                     }
                 }
 
-                String defaultText = "Waiting for player to join game";
-                if (!p2.getText().equals(defaultText)) {
+                if (players.size() == 1) {
+                    p1.setText(user.getEmail());
+                }  else if (players.size() > 1) {
                     p2.setText(newUser.getEmail());
-                } else if (!p3.getText().equals(defaultText)) {
+                } else if (players.size() > 2) {
                     p3.setText(newUser.getEmail());
-                } else if (!p4.getText().equals(defaultText)) {
+                } else if (players.size() > 3) {
                     p4.setText(newUser.getEmail());
                 }
 
