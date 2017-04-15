@@ -65,13 +65,14 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         //Get database reference
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+
 
         //Add player to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
         myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(user); //Store the user in the tree
         players.add(user); //Add first player to array list so that we can count the number of players
 
         //List the current user's email on the list of players
-
     }
 
     public void findPlayers() {
@@ -143,8 +144,8 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         if (id == R.id.button_back) {
             //Clean up old game lobby information
-            myRef = database.getReference("lobby");
-            myRef.child(game_code).removeValue(); //Remove all data associated with the current game
+            myRef = database.getReference();
+            myRef.child("lobby").child(game_code).child("players").child(user.getUid()).removeValue(); //Remove all data associated with the current player, who is leaving the game
 
             //Return to the main lobby
             Intent main_lobby = new Intent(GameLobbyJoin.this, MainActivity.class);

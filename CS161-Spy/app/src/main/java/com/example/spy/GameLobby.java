@@ -90,6 +90,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
             //Add new player to the game lobby list and array list
                 for (DataSnapshot data: dataSnapshot.getChildren()) {
                     //Look for an empty spot, then put the new player's
+
                     //TODO: Add the new player to the arraylist
                     FirebaseUser snapshotUser = data.getValue(FirebaseUser.class);
 
@@ -100,12 +101,12 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                         }
                     }
 
-                //If the snapshotUser is not already in the list, add them to the list
-                if (!found) {
-                    players.add(snapshotUser);
-                    newUser = snapshotUser;
+                    //If the snapshotUser is not already in the list, add them to the list
+                    if (!found) {
+                         players.add(snapshotUser);
+                         newUser = snapshotUser; //Pass the new user to newUser so that we can work with it outside of the loop
+                    }
                 }
-            }
 
                  String defaultText = "Waiting for player to join game";
                  if (!p2.getText().equals(defaultText)) {

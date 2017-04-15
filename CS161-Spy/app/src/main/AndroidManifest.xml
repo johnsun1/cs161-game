@@ -20,7 +20,8 @@
         <activity android:name=".Game" />
         <activity android:name=".CreateGame" />
         <activity android:name=".GameLobby" />
-        <activity android:name=".JoinGame"></activity>
+        <activity android:name=".JoinGame" />
+        <activity android:name=".GameLobbyJoin"></activity>
     </application>
 
 </manifest>
