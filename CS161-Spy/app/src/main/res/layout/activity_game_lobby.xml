@@ -11,11 +11,14 @@
     <TextView
         android:id="@+id/label_lobby_welcome"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="13dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="17dp"
         android:text="@string/game_lobby_welcome"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="28dp"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="27dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +36,7 @@
         android:layout_marginTop="46dp"
         app:layout_constraintTop_toBottomOf="@+id/label_lobby_welcome"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="49dp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
@@ -65,9 +68,12 @@
         android:layout_height="wrap_content"
         android:text="@string/player_placeholder"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="46dp"
-        app:layout_constraintTop_toBottomOf="@+id/label_p3"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="183dp"
+        app:layout_constraintTop_toBottomOf="@+id/label_p1"
         tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="184dp"
         app:layout_constraintLeft_toLeftOf="@+id/label_p3" />
 
     <Button
@@ -75,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/returnLobby"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="23dp"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_check_players"
