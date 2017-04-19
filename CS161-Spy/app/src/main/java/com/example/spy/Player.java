@@ -8,6 +8,10 @@ public class Player {
     private String email;
     private String role;
 
+    public Player() {
+
+    }
+
     public Player(String email, String role) {
         this.email = email;
         this.role = role;

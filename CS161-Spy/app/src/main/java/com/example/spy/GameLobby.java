@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.widget.TextView;
 
@@ -29,7 +30,6 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser user;
-    private Player newUser;
 
     ArrayList<Player> players;
 
@@ -62,6 +62,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
+        findViewById(R.id.button_check_players_one).setOnClickListener(this);
 
         //Get database reference
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -70,6 +71,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         //Store game information
         myRef = database.getReference();
         myRef.child("lobby").child(game_code).setValue(game_name);
+        myRef.child("lobby").child(game_code).child("location").setValue("None");
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
         Player player = new Player(user.getEmail(), "None"); //Player doesn't currently have a role
@@ -77,7 +79,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
         players.add(player); //Add first player to array list so that we can count the number of players
 
-        findPlayers();
+        p1.setText(user.getEmail());
     }
 
     public void findPlayers() {
@@ -87,16 +89,13 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-
-            //Add new player to the game lobby list and array list
-                for (DataSnapshot data: dataSnapshot.getChildren()) {
-                    //Look for an empty spot, then put the new player's
-
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    //Add new player to the game lobby list and array list
                     //TODO: Add the new player to the arraylist
-                    Player snapshotUser = (Player) data.getValue();
+                    Player snapshotUser = dataSnapshot.getValue(Player.class);
 
                     Boolean found = false; //Reset found flag to false
-                    for (Player p: players) {
+                    for (Player p : players) {
                         if (p.getEmail().equals(snapshotUser.getEmail())) {
                             found = true; //snapshotUser is already in the list
                         }
@@ -104,27 +103,25 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
                     //If the snapshotUser is not already in the list, add them to the list
                     if (!found) {
-                         players.add(snapshotUser);
-                         newUser = snapshotUser; //Pass the new user to newUser so that we can work with it outside of the loop
+                        players.add(snapshotUser);
+                        //Update lobby view
+                        if (players.size() > 1) {
+                            p2.setText(snapshotUser.getEmail());
+                        } else if (players.size() > 2) {
+                            p3.setText(snapshotUser.getEmail());
+                        } else if (players.size() > 3) {
+                            p4.setText(snapshotUser.getEmail());
+                        }
                     }
+
+
+                    //TODO: Check for full lobby
+                    if (players.size() == 4) {
+                        Intent startGame = new Intent(GameLobby.this, Game.class);
+                        startActivity(startGame);
+                    }
+
                 }
-
-                if (players.size() == 1) {
-                    p1.setText(user.getEmail());
-                }  else if (players.size() > 1) {
-                     p2.setText(newUser.getEmail());
-                 } else if (players.size() > 2) {
-                     p3.setText(newUser.getEmail());
-                 } else if (players.size() > 3) {
-                     p4.setText(newUser.getEmail());
-                 }
-
-                 //TODO: Check for full lobby
-                if (players.size() == 4) {
-                    Intent startGame = new Intent(GameLobby.this, Game.class);
-                    startActivity(startGame);
-                }
-
             }
 
             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -158,7 +155,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
             //Return to the main lobby
             Intent main_lobby = new Intent(GameLobby.this, MainActivity.class);
             startActivity(main_lobby);
-        } else if (id == R.id.button_check_players) {
+        } else if (id == R.id.button_check_players_one) {
             findPlayers();
         }
     }
