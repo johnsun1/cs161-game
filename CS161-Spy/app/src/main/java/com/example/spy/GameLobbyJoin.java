@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         game_code = data.getString("game_code");
         game_name = data.getString("game_name");
 
+        players = new ArrayList<Player>();
+
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
         findViewById(R.id.button_check_players_one).setOnClickListener(this);
@@ -59,12 +62,11 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         database = FirebaseDatabase.getInstance();
 
         //Add player to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail(), "None"); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail(), "None", user.getUid()); //Player doesn't currently have a role
 
         myRef = database.getReference();
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
-        players = new ArrayList<Player>();
-        players.add(player); //Add first player to array list so that we can count the number of players
+        myRef.child("lobby").child(game_code).child("players").child("player").setValue(player); //Store the user in the tree
+        players.add(player);
     }
 
     public void findPlayers() {
@@ -93,7 +95,7 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
 
 
                     //TODO: Check for full lobby
-                    if (players.size() == 4) {
+                    if (players.size() == 2) {
                         Intent startGame = new Intent(GameLobbyJoin.this, Game.class);
                         startActivity(startGame);
                     }

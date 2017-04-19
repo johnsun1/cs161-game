@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.widget.TextView;
 
@@ -74,9 +75,9 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         myRef.child("lobby").child(game_code).child("location").setValue("None");
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail(), "None"); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail(), "None", user.getUid()); //Player doesn't currently have a role
 
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
+        myRef.child("lobby").child(game_code).child("players").child("leader").setValue(player); //Store the user in the tree
         players.add(player); //Add first player to array list so that we can count the number of players
 
         p1.setText(user.getEmail());
@@ -115,8 +116,30 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                     }
 
 
-                    //TODO: Check for full lobby
-                    if (players.size() == 4) {
+
+                    if (players.size() == 2) {
+                        //Determine who is the spy
+                        Random rand = new Random();
+                        int pickSpy = rand.nextInt(2); //Generate a random number from 0 to 1 for testing
+                        players.get(pickSpy).setRole("Spy");
+
+
+                        int pickLocation = rand.nextInt(9);
+                        ArrayList<String> locale = new ArrayList<String>();
+                        //Add random locations to locale
+                        locale.add("Arctic Base");
+                        locale.add("Moon Base");
+                        locale.add("Submarine");
+                        locale.add("Silicon Valley Startup");
+                        locale.add("European Castle");
+                        locale.add("London Subway Train");
+                        locale.add("Cafe in Athens");
+                        locale.add("Cruise Ship");
+                        locale.add("Gas Station");
+                        locale.add("Library");
+
+                        myRef.child("lobby").child(game_code).child("location").setValue(locale.get(pickLocation));
+
                         Intent startGame = new Intent(GameLobby.this, Game.class);
                         startActivity(startGame);
                     }
