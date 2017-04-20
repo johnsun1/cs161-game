@@ -25,6 +25,8 @@ import android.view.View;
 public class GameLobby extends AppCompatActivity implements View.OnClickListener {
     private Intent extra;
 
+    private Random rand;
+
     private String game_code;
     private String game_name;
 
@@ -33,8 +35,10 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     private FirebaseUser user;
 
     ArrayList<Player> players;
+    ArrayList<String> playerOrder;
 
     private Bundle data;
+    private Bundle gameData;
 
     private TextView p1;
     private TextView p2;
@@ -45,6 +49,8 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby);
+
+        rand = new Random();
 
         //Retrieve extra information from game creation menu
         extra = getIntent();
@@ -60,6 +66,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
         //Add all players into a data structure for easy handling
         players = new ArrayList<Player>();
+        playerOrder = new ArrayList<String>();
 
         //Buttons
         findViewById(R.id.button_back).setOnClickListener(this);
@@ -72,10 +79,9 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         //Store game information
         myRef = database.getReference();
         myRef.child("lobby").child(game_code).setValue(game_name);
-        myRef.child("lobby").child(game_code).child("location").setValue("None");
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail(), "None", user.getUid()); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail(), user.getUid()); //Player doesn't currently have a role
 
         myRef.child("lobby").child(game_code).child("players").child("leader").setValue(player); //Store the user in the tree
         players.add(player); //Add first player to array list so that we can count the number of players
@@ -118,14 +124,17 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
 
                     if (players.size() == 2) {
+                        //Record order of players
+                        for (Player p : players) {
+                            playerOrder.add(p.getEmail());
+                        }
+
                         //Determine who is the spy
-                        Random rand = new Random();
                         int pickSpy = rand.nextInt(2); //Generate a random number from 0 to 1 for testing
-                        players.get(pickSpy).setRole("Spy");
-
-
                         int pickLocation = rand.nextInt(9);
+
                         ArrayList<String> locale = new ArrayList<String>();
+
                         //Add random locations to locale
                         locale.add("Arctic Base");
                         locale.add("Moon Base");
@@ -138,9 +147,17 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                         locale.add("Gas Station");
                         locale.add("Library");
 
-                        myRef.child("lobby").child(game_code).child("location").setValue(locale.get(pickLocation));
-
                         Intent startGame = new Intent(GameLobby.this, Game.class);
+
+                        //Pick and send over who the spy is, what the the location is
+                        gameData = new Bundle();
+                        gameData.putString("spy", players.get(pickSpy).getEmail());
+                        gameData.putString("location", locale.get(pickLocation));
+                        gameData.putStringArrayList("player_order", playerOrder);
+                        gameData.putString("game_code", game_code);
+
+                        startGame.putExtra("game_data", gameData);
+
                         startActivity(startGame);
                     }
 

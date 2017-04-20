@@ -6,7 +6,6 @@
     <string name="createGame">Create Game</string>
     <string name="joinGame">Join Game</string>
     <string name="spy">You are a spy</string>
-    <string name="nonSpy">You are not a spy</string>
 
     <string name="createName">Game Name</string>
     <string name="gameCode">Game Code</string>
@@ -24,6 +23,7 @@
     <string name="log_out_button">Log Out</string>
 
     <string name="game_lobby_welcome">Welcome to the game lobby. When enough players have joined the lobby, you may begin the game.</string>
+
     <string name="player_placeholder">Waiting for player to join lobby</string>
 
     <string name="game_code_prompt">Enter game code</string>
