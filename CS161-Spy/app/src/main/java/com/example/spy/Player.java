@@ -6,22 +6,18 @@ package com.example.spy;
 
 public class Player {
     private String email;
-    private String ID;
 
     public Player() {
 
     }
 
-    public Player(String email, String ID) {
+    public Player(String email) {
         this.email = email;
-        this.ID = ID;
     }
 
     public String getEmail() {
         return email;
     }
     public void setEmail(String s) { email = s; }
-
-    public String getID() { return ID; }
 
 }

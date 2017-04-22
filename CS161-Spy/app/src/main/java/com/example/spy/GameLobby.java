@@ -81,9 +81,9 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         myRef.child("lobby").child(game_code).setValue(game_name);
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail(), user.getUid()); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail()); //Player doesn't currently have a role
 
-        myRef.child("lobby").child(game_code).child("players").child("leader").setValue(player); //Store the user in the tree
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
         players.add(player); //Add first player to array list so that we can count the number of players
 
         p1.setText(user.getEmail());

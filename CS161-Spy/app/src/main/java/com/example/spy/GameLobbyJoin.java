@@ -62,10 +62,10 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         database = FirebaseDatabase.getInstance();
 
         //Add player to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail(), user.getUid()); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail()); //Player doesn't currently have a role
 
         myRef = database.getReference();
-        myRef.child("lobby").child(game_code).child("players").child("player").setValue(player); //Store the user in the tree
+        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
         players.add(player);
     }
 
@@ -94,7 +94,7 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
                     }
 
 
-                    //TODO: Check for full lobby
+                    //Check for full lobby
                     if (players.size() == 2) {
 
                         Intent startGame = new Intent(GameLobbyJoin.this, Game.class);
