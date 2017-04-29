@@ -121,8 +121,6 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                         }
                     }
 
-
-
                     if (players.size() == 2) {
                         //Record order of players
                         for (Player p : players) {
@@ -133,26 +131,11 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
                         int pickSpy = rand.nextInt(2); //Generate a random number from 0 to 1 for testing
                         int pickLocation = rand.nextInt(9);
 
-                        ArrayList<String> locale = new ArrayList<String>();
-
-                        //Add random locations to locale
-                        locale.add("Arctic Base");
-                        locale.add("Moon Base");
-                        locale.add("Submarine");
-                        locale.add("Silicon Valley Startup");
-                        locale.add("European Castle");
-                        locale.add("London Subway Train");
-                        locale.add("Cafe in Athens");
-                        locale.add("Cruise Ship");
-                        locale.add("Gas Station");
-                        locale.add("Library");
-
                         Intent startGame = new Intent(GameLobby.this, Game.class);
 
                         //Pick and send over who the spy is, what the the location is
                         gameData = new Bundle();
                         gameData.putString("spy", players.get(pickSpy).getEmail());
-                        gameData.putString("location", locale.get(pickLocation));
                         gameData.putStringArrayList("player_order", playerOrder);
                         gameData.putString("game_code", game_code);
 

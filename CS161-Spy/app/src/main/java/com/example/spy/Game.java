@@ -40,10 +40,14 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
 
     private String game_code;
 
+    private Random rand;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        rand = new Random();
 
         //Firebase stuff
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -92,11 +96,11 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         loc.add(new Location ("Gas Station", "Manager", "Mechanic", "Truck Driver", "Cashier"));
         loc.add(new Location ("Library", "Librarian", "College Student", "Homeless Person", "Security Guard"));
 
-        for (Location l : loc){
-            if (l.getLocationName().equals(locale)) {
-                localeObj = l;
-            }
-        }
+
+        localeObj = loc.get(rand.nextInt(9));
+
+
+        myRef.child("lobby").child(game_code).child("location").setValue(localeObj);
 
         //Display a special UI if the user is a spy
         if (user.getEmail().equals(spy)) {
@@ -108,6 +112,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             location.setText(localeObj.getLocationName());
             desc.setText("Welcome to Spy Fall. Infer who is the spy before time runs out in order to win the game.");
         }
+
     }
 
 
@@ -118,7 +123,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         if (id == R.id.button3) {
             //Clean up old game lobby information
             myRef = database.getReference("lobby");
-            myRef.child(game_code).removeValue(); //Remove all data associated with the current game
+            myRef.child(game_code).child("players").child(user.getUid()).removeValue(); //Remove all data associated with the current game
 
             //Return to the main lobby
             Intent main_lobby = new Intent(Game.this, MainActivity.class);
