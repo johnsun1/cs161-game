@@ -129,16 +129,17 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
                         //Determine who is the spy
                         int pickSpy = rand.nextInt(2); //Generate a random number from 0 to 1 for testing
-                        int pickLocation = rand.nextInt(9);
 
                         Intent startGame = new Intent(GameLobby.this, Game.class);
 
+                        //Store Spy identity in Firebase
+                        //gameData.putString("spy", players.get(pickSpy).getEmail());
+                        myRef.child("lobby").child(game_code).child("spy").setValue(players.get(pickSpy).getEmail());
+
                         //Pick and send over who the spy is, what the the location is
                         gameData = new Bundle();
-                        gameData.putString("spy", players.get(pickSpy).getEmail());
-                        gameData.putStringArrayList("player_order", playerOrder);
-                        gameData.putString("game_code", game_code);
 
+                        gameData.putString("game_code", game_code);
                         startGame.putExtra("game_data", gameData);
 
                         startActivity(startGame);

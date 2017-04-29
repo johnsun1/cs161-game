@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Game extends AppCompatActivity implements View.OnClickListener {
+public class GameJoin extends AppCompatActivity implements View.OnClickListener {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseUser user;
@@ -35,7 +35,6 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
     private Bundle data;
 
     private String spy;
-    private String locale;
 
     private Location localeObj;
 
@@ -69,8 +68,23 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         //Retrieve data from previous activity
         extra = getIntent();
         data = extra.getBundleExtra("game_data");
-        locale = data.getString("location");
         game_code = data.getString("game_code");
+
+        //TODO: Pull location object from Firebase
+        myRef.child("lobby").child(game_code).child("location").addValueEventListener( new ValueEventListener() {
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    localeObj = dataSnapshot.getValue(Location.class);
+                }
+            }
+        });
 
         myRef.child("lobby").child(game_code).child("spy").addValueEventListener( new ValueEventListener() {
 
@@ -80,34 +94,12 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             }
 
             @Override
-            //TODO
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     spy = (String) dataSnapshot.getValue(String.class);
                 }
             }
         });
-
-        //Establish what location players are at
-        ArrayList<Location> loc = new ArrayList<Location>();
-
-        //Add random locations to locale
-        loc.add(new Location ("Arctic Base", "Captain", "Chief Scientist", "Intern", "Hunter"));
-        loc.add(new Location ("Moon Base", "Scientist", "Geologist", "Chemist", "Engineer"));
-        loc.add(new Location ("Submarine", "Captain", "First Officer", "Cook", "Janitor"));
-        loc.add(new Location ("Silicon Valley Startup", "Hacker", "CEO", "Programmer", "Venture Capitalist"));
-        loc.add(new Location ("European Castle", "Knight", "King", "Concubine", "Peasant"));
-        loc.add(new Location ("London Subway Train", "Commuter", "Janitor", "Ticket Agent", "Security Guard"));
-        loc.add(new Location ("Cafe in Athens", "Barista", "Actor", "Screenwriter", "College Student"));
-        loc.add(new Location ("Cruise Ship", "Retired School Teacher", "Rich Girl", "Poor Hustler", "Crew"));
-        loc.add(new Location ("Gas Station", "Manager", "Mechanic", "Truck Driver", "Cashier"));
-        loc.add(new Location ("Library", "Librarian", "College Student", "Homeless Person", "Security Guard"));
-
-
-        localeObj = loc.get(rand.nextInt(9));
-
-
-        myRef.child("lobby").child(game_code).child("location").setValue(localeObj);
 
         //Display a special UI if the user is a spy
         if (user.getEmail().equals(spy)) {
@@ -133,7 +125,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
             myRef.child(game_code).child("players").child(user.getUid()).removeValue(); //Remove all data associated with the current game
 
             //Return to the main lobby
-            Intent main_lobby = new Intent(Game.this, MainActivity.class);
+            Intent main_lobby = new Intent(GameJoin.this, MainActivity.class);
             startActivity(main_lobby);
         }
     }
