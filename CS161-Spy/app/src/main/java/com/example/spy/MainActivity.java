@@ -1,11 +1,14 @@
 package com.example.spy;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 
 import android.content.Intent;
 
 import android.util.Log;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -22,6 +25,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText field_email;
     private EditText field_password;
@@ -34,6 +40,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //load image for login screen
+        ImageView imageView3 = (ImageView)findViewById(R.id.spy2);
+
+        try {
+            InputStream istream = getResources().getAssets().open("spy2.jpg");
+            Bitmap bitmap = BitmapFactory.decodeStream(istream);
+            imageView3.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.d("Assets","Error");
+        }
+
 
         //Views
         field_email = (EditText) findViewById(R.id.field_email);
