@@ -96,8 +96,11 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
 
                     //Check for full lobby
                     if (players.size() == 2) {
+                        Intent startGame = new Intent(GameLobbyJoin.this, GameJoin.class);
+                        Bundle codeData = new Bundle();
+                        codeData.putString("game_code", game_code);
+                        startGame.putExtra("game_data", codeData);
 
-                        Intent startGame = new Intent(GameLobbyJoin.this, Game.class);
 
                         startActivity(startGame);
                     }
