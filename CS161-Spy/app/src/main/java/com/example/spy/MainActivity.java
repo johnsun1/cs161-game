@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //load image for login screen
+        //load image for login screen from asset folder
         ImageView imageView3 = (ImageView)findViewById(R.id.spy2);
 
         try {
