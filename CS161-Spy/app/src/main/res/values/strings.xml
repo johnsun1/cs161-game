@@ -26,6 +26,6 @@
 
     <string name="player_placeholder">Waiting for player to join lobby</string>
 
-    <string name="game_code_prompt">Enter game code</string>
+    <string name="game_code_prompt">Game Code</string>
     <string name="check_for_players">Check for players</string>
 </resources>

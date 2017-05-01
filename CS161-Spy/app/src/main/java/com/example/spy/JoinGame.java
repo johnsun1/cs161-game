@@ -1,5 +1,7 @@
 package com.example.spy;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -7,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.EditText;
 
@@ -15,6 +19,9 @@ import android.view.View;
 import android.content.Intent;
 
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class JoinGame extends AppCompatActivity implements View.OnClickListener {
     private FirebaseDatabase database;
@@ -27,6 +34,16 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_game);
+        //loadImage from Assets
+        ImageView imageView3 = (ImageView)findViewById(R.id.join_game_spy);
+
+        try {
+            InputStream istream = getResources().getAssets().open("join_game.jpg");
+            Bitmap bitmap = BitmapFactory.decodeStream(istream);
+            imageView3.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            Log.d("Assets","Error");
+        }
 
         //Views
         join_game_code = (EditText) findViewById(R.id.field_join_game_code);
@@ -43,6 +60,7 @@ public class JoinGame extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+
 
         //Stuff happens when the user clicks a button
         int id = v.getId();
