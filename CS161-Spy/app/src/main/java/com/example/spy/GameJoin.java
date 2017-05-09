@@ -75,14 +75,18 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onCancelled(DatabaseError error) {
-
+            System.out.println("************************IN CANCELLED*************************************");
             }
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("************************OUTSIDE IF*************************************");
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    localeObj = dataSnapshot.getValue(Location.class);
+                    localeObj = data.getValue(Location.class);
+                    System.out.println("************************IN IF*************************************");
                 }
+                role.setText(localeObj.getRole(rand.nextInt(3)));
+                location.setText(localeObj.getLocationName());
             }
         });
 
@@ -107,9 +111,9 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
             location.setText("Mystery Location");
             desc.setText("Welcome to Spy Fall. Keep your identity hidden for the length of the game, or figure out what the location is to win the game.");
         } else {
-            role.setText(localeObj.getRole(rand.nextInt(3)));
-            location.setText(localeObj.getLocationName());
-            desc.setText("Welcome to Spy Fall. Infer who is the spy before time runs out in order to win the game.");
+            //role.setText(localeObj.getRole(rand.nextInt(3)));
+            //location.setText(localeObj.getLocationName());
+            //desc.setText("Welcome to Spy Fall. Infer who is the spy before time runs out in order to win the game.");
         }
 
     }
