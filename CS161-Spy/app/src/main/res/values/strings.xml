@@ -22,10 +22,10 @@
     <string name="register_button">Register</string>
     <string name="log_out_button">Log Out</string>
 
-    <string name="game_lobby_welcome">Welcome to the game lobby. When enough players have joined the lobby, you may begin the game.</string>
+    <string name="game_lobby_welcome">When enough players have joined the lobby, you may begin the game.</string>
 
-    <string name="player_placeholder">Waiting for player to join lobby</string>
+    <string name="player_placeholder">Waiting for player to join</string>
 
     <string name="game_code_prompt">Game Code</string>
-    <string name="check_for_players">Check for players</string>
+    <string name="check_for_players">Check players</string>
 </resources>

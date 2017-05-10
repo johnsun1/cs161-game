@@ -84,7 +84,7 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
                 System.out.println("************************OUTSIDE IF*************************************");
                    locationname = (String)dataSnapshot.child("locationName").getValue();
                    System.out.println(locationname+ "**************************************************************************88");
-                   localeObj =  locationname;
+                   
             }
 
         });

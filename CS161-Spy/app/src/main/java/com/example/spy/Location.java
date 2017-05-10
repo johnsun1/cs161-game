@@ -12,14 +12,16 @@ public class Location {
     private String role_2;
     private String role_3;
     private String role_4;
+    private String spy;
     private ArrayList<String> roles;
 
-    public Location(String name, String role_1, String role_2, String role_3, String role_4) {
+    public Location(String name, String role_1, String role_2, String role_3, String role_4, String spy) {
         this.name = name;
         this.role_1 = role_1;
         this.role_2 = role_2;
         this.role_3 = role_3;
         this.role_4 = role_4;
+        this.spy = spy;
 
         roles = new ArrayList<String>();
         roles.add(role_1);
@@ -34,5 +36,13 @@ public class Location {
 
     public String getRole(Integer i) {
         return roles.get(i);
+    }
+
+    public String getSpy() {
+        return spy;
+    }
+
+    public void setSpy(String s) {
+        spy = s;
     }
 }
