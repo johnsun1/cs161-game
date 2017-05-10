@@ -27,7 +27,7 @@
             android:id="@+id/label_welcome_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
         <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +56,7 @@
 
             <Button
                 android:id="@+id/button_join_game"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -66,6 +67,7 @@
 
             <Button
                 android:id="@+id/button_create_game"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -82,6 +84,7 @@
 
             <Button
                 android:id="@+id/button_store"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -91,6 +94,7 @@
                 android:background="@drawable/button_disabled"/>
 
             <Button
+                android:textColor="@color/white"
                 android:id="@+id/button_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

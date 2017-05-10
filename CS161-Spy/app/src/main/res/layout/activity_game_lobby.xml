@@ -52,38 +52,51 @@
         android:weightSum="4"
         android:padding="25dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/label_p1"
-            android:textColor="@color/white"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/player_placeholder"
-            android:padding="30dp"
-            android:orientation="vertical"/>
-        <TextView
-            android:id="@+id/label_p2"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/player_placeholder"
-            android:padding="30dp"
-            android:orientation="vertical"/>
-        <TextView
-            android:id="@+id/label_p3"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/player_placeholder"
-            android:padding="30dp"
-            android:orientation="vertical"/>
-        <TextView
-            android:id="@+id/label_p4"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/player_placeholder"
-            android:padding="30dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/label_p1"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/player_placeholder"
+                    android:padding="30dp"
+                    android:orientation="vertical"/>
+                <TextView
+                    android:id="@+id/label_p2"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/player_placeholder"
+                    android:padding="30dp"
+                    android:orientation="vertical"/>
+                <TextView
+                    android:id="@+id/label_p3"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/player_placeholder"
+                    android:padding="30dp"
+                    android:orientation="vertical"/>
+                <TextView
+                    android:id="@+id/label_p4"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/player_placeholder"
+                    android:padding="30dp"
+                    android:orientation="vertical"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
     </LinearLayout>
     <!-- LinearLayout for two buttons -->
     <LinearLayout

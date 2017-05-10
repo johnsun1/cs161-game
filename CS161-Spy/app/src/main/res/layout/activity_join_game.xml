@@ -71,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/joinGame"
+                android:textColor="@color/white"
                 android:orientation="horizontal"
                 android:layout_weight="1"
                 android:background="@drawable/button_default"
@@ -78,6 +79,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:text="@string/returnLobby"
                 android:id="@+id/button_return_lobby"
                 android:orientation="horizontal"
