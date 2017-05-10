@@ -37,6 +37,7 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
     private String spy;
 
     private Location localeObj;
+    private String locationname;
 
     private String game_code;
 
@@ -71,7 +72,7 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
         game_code = data.getString("game_code");
 
         //TODO: Pull location object from Firebase
-        myRef.child("lobby").child(game_code).child("location").addValueEventListener( new ValueEventListener() {
+         myRef.child("lobby").child(game_code).child("location").addValueEventListener( new ValueEventListener() {
 
             @Override
             public void onCancelled(DatabaseError error) {
@@ -81,13 +82,11 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println("************************OUTSIDE IF*************************************");
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    localeObj = data.getValue(Location.class);
-                    System.out.println("************************IN IF*************************************");
-                }
-                role.setText(localeObj.getRole(rand.nextInt(3)));
-                location.setText(localeObj.getLocationName());
+                   locationname = (String)dataSnapshot.child("locationName").getValue();
+                   System.out.println(locationname+ "**************************************************************************88");
+                   localeObj =  locationname;
             }
+
         });
 
         myRef.child("lobby").child(game_code).child("spy").addValueEventListener( new ValueEventListener() {
