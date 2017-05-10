@@ -54,6 +54,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/label_p1"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/player_placeholder"
@@ -61,6 +62,7 @@
             android:orientation="vertical"/>
         <TextView
             android:id="@+id/label_p2"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/player_placeholder"
@@ -68,6 +70,7 @@
             android:orientation="vertical"/>
         <TextView
             android:id="@+id/label_p3"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/player_placeholder"
@@ -75,6 +78,7 @@
             android:orientation="vertical"/>
         <TextView
             android:id="@+id/label_p4"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/player_placeholder"
@@ -96,7 +100,8 @@
             android:orientation="horizontal"
             android:padding="20dp"
             android:paddingLeft="10dp"
-            android:text="@string/returnLobby" />
+            android:text="@string/returnLobby"
+            android:textColor="@color/white"/>
 
         <TextView
             android:text="            "
@@ -112,6 +117,7 @@
             android:orientation="horizontal"
             android:padding="20dp"
             android:paddingRight="10dp"
+            android:textColor="@color/white"
             android:text="@string/check_for_players" />
 
     </LinearLayout>
