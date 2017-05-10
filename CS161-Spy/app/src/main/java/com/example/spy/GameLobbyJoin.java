@@ -72,17 +72,18 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         database = FirebaseDatabase.getInstance();
 
         //Add player to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail()); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail(), game_code); //Player doesn't currently have a role
 
-        myRef = database.getReference();
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
+        myRef = database.getReference().child("players").child(user.getUid()); //Store the user in the tree
+        myRef.setValue(player); //Store the user in the tree
         players.add(player);
     }
 
     public void findPlayers() {
 
         // Attach a listener to read the data at our game lobby reference
-        myRef.child("lobby").child(game_code).child("players").addChildEventListener(new ChildEventListener() {
+        myRef = database.getReference("players");
+        myRef.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
@@ -143,8 +144,8 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         if (id == R.id.button_back) {
             //Clean up old game lobby information
-            myRef = database.getReference("lobby");
-            myRef.child(game_code).removeValue(); //Remove all data associated with the current game
+            myRef = database.getReference().child(game_code).child(user.getUid());
+            myRef.removeValue(); //Remove all data associated with the current game
 
             //Return to the main lobby
             Intent main_lobby = new Intent(GameLobbyJoin.this, MainActivity.class);

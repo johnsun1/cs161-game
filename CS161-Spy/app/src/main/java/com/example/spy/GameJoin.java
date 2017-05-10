@@ -4,16 +4,18 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import android.content.Intent;
+
 import android.view.View;
+
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,35 +73,22 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
         game_code = data.getString("game_code");
 
         //TODO: Pull location object from Firebase
-        myRef.child("lobby").child(game_code).child("location").addValueEventListener( new ValueEventListener() {
+        myRef = database.getReference(game_code);
+        myRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onCancelled(DatabaseError error) {
-
+                System.out.println("****************************************************");
             }
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    localeObj = dataSnapshot.getValue(Location.class);
-                }
+                Location value = dataSnapshot.getValue(Location.class);
+                localeObj = value;
             }
         });
 
-        myRef.child("lobby").child(game_code).child("spy").addValueEventListener( new ValueEventListener() {
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    spy = (String) dataSnapshot.getValue(String.class);
-                }
-            }
-        });
+        spy = localeObj.getSpy();
 
         //Display a special UI if the user is a spy
         if (user.getEmail().equals(spy)) {
@@ -121,8 +110,8 @@ public class GameJoin extends AppCompatActivity implements View.OnClickListener 
         int id = v.getId();
         if (id == R.id.button3) {
             //Clean up old game lobby information
-            myRef = database.getReference("lobby");
-            myRef.child(game_code).child("players").child(user.getUid()).removeValue(); //Remove all data associated with the current game
+            myRef = database.getReference().child(game_code).child("players").child(user.getUid());
+            myRef.removeValue(); //Remove all data associated with the current game
 
             //Return to the main lobby
             Intent main_lobby = new Intent(GameJoin.this, MainActivity.class);

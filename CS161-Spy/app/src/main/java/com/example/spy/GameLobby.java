@@ -77,14 +77,15 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         database = FirebaseDatabase.getInstance();
 
         //Store game information
-        myRef = database.getReference();
-        myRef.child("lobby").child(game_code).setValue(game_name);
+        myRef = database.getReference().child(game_code);
+        //myRef.setValue(game_name);
 
         //Add player 1 to lobby/game_code/players/ as a node (all players should be stored as children nodes to players/)
-        Player player = new Player(user.getEmail()); //Player doesn't currently have a role
+        Player player = new Player(user.getEmail(), game_code); //Player doesn't currently have a role
 
-        myRef.child("lobby").child(game_code).child("players").child(user.getUid()).setValue(player); //Store the user in the tree
+        myRef = database.getReference().child("players").child(user.getUid()); //Store the user in the tree
         players.add(player); //Add first player to array list so that we can count the number of players
+        myRef.setValue(player);
 
         p1.setText(user.getEmail());
     }
@@ -92,11 +93,13 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
     public void findPlayers() {
 
         // Attach a listener to read the data at our game lobby reference
-        myRef.child("lobby").child(game_code).child("players").addChildEventListener(new ChildEventListener() {
+        myRef = database.getReference("players");
+        myRef.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
+
                     //Add new player to the game lobby list and array list
                     //TODO: Add the new player to the arraylist
                     Player snapshotUser = dataSnapshot.getValue(Player.class);
@@ -132,14 +135,14 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
 
                         Intent startGame = new Intent(GameLobby.this, Game.class);
 
-                        //Store Spy identity in Firebase
-                        //gameData.putString("spy", players.get(pickSpy).getEmail());
-                        myRef.child("lobby").child(game_code).child("spy").setValue(players.get(pickSpy).getEmail());
-
                         //Pick and send over who the spy is, what the the location is
                         gameData = new Bundle();
 
+                        //Store Spy identity and other information into bundle
+                        gameData.putString("spy_email", players.get(pickSpy).getEmail());
+
                         gameData.putString("game_code", game_code);
+
                         startGame.putExtra("game_data", gameData);
 
                         startActivity(startGame);
@@ -173,7 +176,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         int id = v.getId();
         if (id == R.id.button_back) {
             //Clean up old game lobby information
-            myRef = database.getReference("lobby");
+            myRef = database.getReference();
             myRef.child(game_code).removeValue(); //Remove all data associated with the current game
 
             //Return to the main lobby
