@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import android.content.Intent;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.view.View;
@@ -57,6 +60,11 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         data = extra.getBundleExtra("game_data");
         game_code = data.getString("game_code");
         game_name = data.getString("game_name");
+        //load gif files
+        ImageView imageView = (ImageView) findViewById(R.id.loading_radar);
+        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
+        Glide.with(this).load(R.raw.loading_radar).into(imageViewTarget);
+
 
         //Views
         p1 = (TextView) findViewById(R.id.label_p1);

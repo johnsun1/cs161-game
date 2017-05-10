@@ -47,9 +47,6 @@ public class GameLobbyJoin extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_lobby_join);
         //loading gif file
-       // ImageView imageView = (ImageView) findViewById(R.id.loading_gif);
-       // GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
-       // Glide.with(this).load(R.raw.lane).into(target);
         ImageView imageView = (ImageView) findViewById(R.id.randar2);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
         Glide.with(this).load(R.raw.ranar2).into(imageViewTarget);

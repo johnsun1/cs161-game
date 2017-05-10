@@ -1,5 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/gray"
+    tools:context="com.example.spy.MainActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="2">
+        <!-- LinerLayout for welcome message -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/label_lobby_welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_lobby_welcome"
+                android:orientation="vertical"/>
+        </LinearLayout>
+        <!-- LinearLayout for gif -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/loading_radar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="25dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <!-- LinearLayout for list of players -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4"
+        android:padding="25dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/label_p1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/player_placeholder"
+            android:padding="30dp"
+            android:orientation="vertical"/>
+        <TextView
+            android:id="@+id/label_p2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/player_placeholder"
+            android:padding="30dp"
+            android:orientation="vertical"/>
+        <TextView
+            android:id="@+id/label_p3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/player_placeholder"
+            android:padding="30dp"
+            android:orientation="vertical"/>
+        <TextView
+            android:id="@+id/label_p4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/player_placeholder"
+            android:padding="30dp"
+            android:orientation="vertical"/>
+    </LinearLayout>
+    <!-- LinearLayout for two buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_default"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:paddingLeft="10dp"
+            android:text="@string/returnLobby" />
+
+        <TextView
+            android:text="            "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/button_check_players_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_default"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:paddingRight="10dp"
+            android:text="@string/check_for_players" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+<!-- <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -100,3 +219,4 @@
         android:layout_marginBottom="59dp"
         app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>
+-->
