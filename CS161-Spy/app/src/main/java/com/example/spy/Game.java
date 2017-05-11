@@ -60,7 +60,7 @@ public class Game extends AppCompatActivity implements View.OnClickListener {
         //load gif files
         ImageView imageView = (ImageView) findViewById(R.id.change_spy);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this).load(R.raw.change_spy).into(imageViewTarget);
+       // Glide.with(this).load(R.raw.change_spy).into(imageViewTarget);
 
 
         //Views

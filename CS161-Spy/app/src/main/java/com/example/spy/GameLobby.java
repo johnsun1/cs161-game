@@ -63,7 +63,7 @@ public class GameLobby extends AppCompatActivity implements View.OnClickListener
         //load gif files
         ImageView imageView = (ImageView) findViewById(R.id.loading_radar);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this).load(R.raw.loading_radar).into(imageViewTarget);
+       // Glide.with(this).load(R.raw.loading_radar).into(imageViewTarget);
 
 
         //Views
